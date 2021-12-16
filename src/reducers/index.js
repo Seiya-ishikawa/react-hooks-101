@@ -4,10 +4,10 @@
 //     body: 'TOKYO 2020 !'
 // }
 
-state=[]
-state=[
-    {id:1,title:'タイトル１',body:'ボディー'}
-]
+// state=[]
+// state=[
+//     {id:1,title:'タイトル１',body:'ボディー'}
+// ]
 const events = (state = [], action) => {
     switch(action.type){
         case 'CREATE_EVENT':
