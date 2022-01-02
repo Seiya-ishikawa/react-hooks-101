@@ -16,7 +16,7 @@ const events = (state = [], action) => {
             let id = length === 0 ? 1 : state[length - 1].id + 1
             return [...state, { id, ...event}]
         case 'DELETE_EVENT':
-            return state
+            return state.filter(hogeANAevent => hogeANAevent.id !== action.id)
         case 'CREATE_ALL_EVENTS':
             return []
         default:
