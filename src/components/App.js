@@ -1,68 +1,17 @@
-import React,{useEffect, useState, useReducer} from 'react';
+import React,{ useReducer } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Event from './Event'
 import reducer from '../reducers'
+import EventForm from './EventForm'
+import Events from './Events'
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, [])
-  const [title, setTitle] = useState('')
-  const [body, setBody] = useState('')
-
-  const addEvent = e => {
-    e.preventDefault()
-    dispatch({
-        type: 'CREATE_EVENT',
-        title,
-        body
-      })
-
-      setTitle('')
-      setBody('')
-  }
-  
-  console.log({state})
-  console.log(state)
-
-  const deleteAllEvents = e => {
-    // サブミット(画面更新)を抑止する↓
-    e.preventDefault()
-    const result = window.confirm('全てのイベントを本当に削除しても良いですか？')
-    if (result)dispatch({type:'DELETE_ALL_EVENTS'})
-  }
-
-  const unCreatable = title === '' || body === ''
-  const unDeletable = state.length === 0
+  console.log(state, 'in App.js');
 
   return (
     <div className="container-fruid">
-    <h4>イベント作成フォーム</h4>
-    <form>
-      <div className="form-group">
-        <label thmlFor="formEventTitle">タイトル</label>
-        <input className="form-control" id="formEventTitle" value={title} onChange={e => setTitle(e.target.value)}/>
-      </div>
-      <div className="form-group">
-        <label thmlFor="formEventBody">ボディー</label>
-        <textarea className="form-control" id="formEventBody" value={body} onChange={e => setBody(e.target.value)}></textarea>
-      </div>
-      <button className='btn btn-primary' onClick={addEvent} disabled={unCreatable}>イベントを作成する</button>
-      <button className='btn btn-danger' onClick={deleteAllEvents} disabled={unDeletable}>すべてのイベントを削除する</button>
-    </form>
-
-    <h4>イベント一覧</h4>
-    <table className='table table-hover'>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>タイトル</th>
-        <th>ボディー</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      { state.map(( event, index) => (<Event key={index} event={event} dispatch={dispatch} />))}
-    </tbody>
-    </table>
+    <EventForm state={state} dispatch={dispatch}/>
+    <Events state={state} dispatch={dispatch}/>
     </div>
   )
 }
